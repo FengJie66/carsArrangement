@@ -1,0 +1,36 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: SpringBootApi
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cars_arrangement?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+logging:
+  level:
+    com.example: debug
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+mqtt:
+  username: admin
+  password: 123456
+  host-url: tcp://broker.emqx.io:1883
+  client-id: publish_client
+  default-topic: topic
+  timeout: 100
+  keepalive: 100
+  enabled: true
+api:
+  imgFolder: D:/images/
+  imgMap: /images/
+  imgFolderConfig: file:D:/images/
+  imgMapConfig: /images/**

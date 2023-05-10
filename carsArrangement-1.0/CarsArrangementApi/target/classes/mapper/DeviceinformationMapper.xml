@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.DeviceinformationMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.pojo.Deviceinformation">
+            <id property="deviceid" column="deviceId" jdbcType="VARCHAR"/>
+            <result property="temperture" column="temperture" jdbcType="VARCHAR"/>
+            <result property="humidity" column="humidity" jdbcType="VARCHAR"/>
+            <result property="devicename" column="deviceName" jdbcType="VARCHAR"/>
+            <result property="deviceworkplace" column="deviceworkplace" jdbcType="VARCHAR"/>
+            <result property="coverimagefilename" column="coverimagefilename" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        deviceId,temperture,humidity,
+        deviceName,deviceworkplace,coverimagefilename
+    </sql>
+    <insert id="save">
+        insert into deviceinformation values(#{device.deviceid},#{device.temperture},#{device.humidity},
+                                             #{device.devicename},#{device.deviceworkplace},#{device.coverimagefilename})
+    </insert>
+    <update id="update">
+        update deviceinformation set temperture = #{device.temperture},humidity = #{device.humidity},
+                                     deviceName = #{device.devicename},deviceworkplace = #{device.deviceworkplace},
+                                     coverimagefilename = #{device.coverimagefilename}  where deviceId = #{device.deviceid}
+    </update>
+    <delete id="delById">
+        delete from deviceinformation where deviceId = #{id}
+    </delete>
+    <select id="count" resultType="java.lang.Long">
+        select count(deviceId) from deviceinformation
+        <where>
+            <if test="search != null and search != ''">
+                deviceName like '%${search}%' or deviceworkplace like '%${search}%'
+            </if>
+        </where>
+    </select>
+    <select id="getRecords" resultMap="BaseResultMap">
+        select * from deviceinformation
+        <where>
+            <if test="search != null and search != ''">
+                deviceName like '%${search}%' or deviceworkplace like '%${search}%'
+            </if>
+        </where>
+        limit #{page.current},#{page.size}
+    </select>
+</mapper>
